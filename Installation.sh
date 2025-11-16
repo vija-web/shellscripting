@@ -14,11 +14,11 @@ fi
 
 INSTALLING(){
     echo "Installing $1"
-    dnf install $1 -y &>> $FILE_NAME
+    dnf install $1 -y &>> $FILE_NAME.log
 }
 
 INSTALLED_CHECK(){
-    dnf list installed $1 -y &>> $FILE_NAME
+    dnf list installed $1 -y &>> $FILE_NAME.log
     if [ $? -ne 0 ]; then
         INSTALLING $1
     else 
