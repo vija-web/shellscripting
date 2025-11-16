@@ -8,6 +8,7 @@ mkdir -p $LOGS_FOLDER
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 FILE_NAME="$LOGS_FOLDER/$SCRIPT_NAME.log"
 USER_ID=$(id -u)
+
 if [ $USER_ID -ne 0 ]; then
     echo "Run with the root user please"
     exit 1
@@ -15,11 +16,11 @@ fi
 
 INSTALLING(){
     echo "Installing $1"
-    dnf install $1 -y &>> /var/log/shell_logs/$FILE_NAME
+    dnf install $1 -y &>> $FILE_NAME
 }
 
 INSTALLED_CHECK(){
-    dnf list installed $1 -y &>> /var/log/shell_logs/$FILE_NAME
+    dnf list installed $1 -y &>> $FILE_NAME
     if [ $? -ne 0 ]; then
         INSTALLING $1
     else 
