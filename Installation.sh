@@ -14,15 +14,16 @@ fi
 
 INSTALLING(){
     echo "Installing $1"
-    dnf install $1 -y &>> $FILE_NAME.log
+    dnf install $1 -y &>> /var/log/shell_logs/$FILE_NAME.log
 }
 
 INSTALLED_CHECK(){
-    dnf list installed $1 -y &>> $FILE_NAME.log
+    dnf list installed $1 -y &>> /var/log/shell_logs/$FILE_NAME.log
     if [ $? -ne 0 ]; then
         INSTALLING $1
     else 
         echo "Already Installed $1 skipping"
+        echo "$FILE_NAME"
     fi
 }
 
