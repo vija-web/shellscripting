@@ -26,6 +26,7 @@ INSTALLING(){
         echo "Installing $1 is $R FAILURE $N"
     else
         echo "Installing $1 is $G SUCCESS $N"
+    fi
 }
 
 INSTALLED_CHECK(){
