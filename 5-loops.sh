@@ -46,7 +46,7 @@ INSTALLED_CHECK(){
 
 #so if the input is 100 packages same for loop will execute for the 100 package 
 #no need to write 100 lines like INSTALLED_CHECK $1,..,INSTALLED_CHECK $100
-for $PACKAGE in $@
+for PACKAGE in $@
 do
     INSTALLED_CHECK $PACKAGE
 done
