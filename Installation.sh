@@ -23,9 +23,9 @@ INSTALLING(){
     echo -e "$G Installing $1 $N"
     dnf install $1 -y &>> $FILE_NAME
     if [ $? -ne 0 ]; then
-        echo "Installing $1 is $R FAILURE $N"
+        echo -e "Installing $1 is $R FAILURE $N"
     else
-        echo "Installing $1 is $G SUCCESS $N"
+        echo -e "Installing $1 is $G SUCCESS $N"
     fi
 }
 
