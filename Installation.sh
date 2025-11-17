@@ -14,8 +14,10 @@ SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 FILE_NAME="$LOGS_FOLDER/$SCRIPT_NAME.log"
 USER_ID=$(id -u)
 
+echo -e "Script started executed at $G $(date) $N" | tee -a $FILE_NAME
+
 if [ $USER_ID -ne 0 ]; then
-    echo -e "Run with the $R ROOT $N user please"
+    echo -e "Run with the $R ROOT $N user please" | tee -a $FILE_NAME
     exit 1
 fi
 
@@ -23,9 +25,9 @@ INSTALLING(){
     echo -e "$G Installing $1 $N"
     dnf install $1 -y &>> $FILE_NAME
     if [ $? -ne 0 ]; then
-        echo -e "Installing $1 is $R FAILURE $N"
+        echo -e "Installing $1 is $R FAILURE $N" | tee -a $FILE_NAME
     else
-        echo -e "Installing $1 is $G SUCCESS $N"
+        echo -e "Installing $1 is $G SUCCESS $N" | tee -a $FILE_NAME
     fi
 }
 
@@ -34,7 +36,7 @@ INSTALLED_CHECK(){
     if [ $? -ne 0 ]; then
         INSTALLING $1
     else 
-        echo -e "Already Installed $1 So... $Y SKIPPING $N"
+        echo -e "Already Installed $1 So... $Y SKIPPING $N" | tee -a $FILE_NAME
     fi
 }
 
