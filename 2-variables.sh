@@ -25,3 +25,13 @@ echo "$PERSON1 :: I'am Fine $PERSON2"
 # suppose if you want to pass the values in the runtime then 
 # read -s used to read the secret values
 # read <Variable_Name>
+
+#Special variables
+#$PWD => Gives the current directory
+#$USER => who is running the script
+#$HOME => Gives the Home directory of the user who is running the script
+#$0 => Gives the script name 
+#$$ => pid of the script
+#$? => previous command exit status
+#$! => pid of the last commad which is gone in the background (eg: sleep 10 &)
+#$@ => give the all the arguments passed to the script 
