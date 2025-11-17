@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #install nginx , mysql , python3 in the server throgh the script
-#we will pass nginx , mysql python3 as the arguments to this script
+#Executing the script with the root user 
+#we will pass nginx  mysql python3 as the arguments to this script
 
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
+R="\e[31m" # colors for the better visual RED
+G="\e[32m" # Green
+Y="\e[33m" # Yellow
+N="\e[0m" # Normal color (white)
 
 LOGS_FOLDER="/var/log/shell_logs"
 mkdir -p $LOGS_FOLDER
@@ -18,7 +19,7 @@ echo -e "Script started executed at $G $(date) $N" | tee -a $FILE_NAME
 
 if [ $USER_ID -ne 0 ]; then
     echo -e "Run with the $R ROOT $N user please" | tee -a $FILE_NAME
-    exit 1
+    exit 1 #exiting fromt he script
 fi
 
 INSTALLING(){
