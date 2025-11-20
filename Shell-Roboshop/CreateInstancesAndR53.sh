@@ -24,13 +24,13 @@ Route(){
         Routing=$(aws route53 change-resource-record-sets \
         --hosted-zone-id Z0971643FE7HKS61G2W9 \
         --change-batch "{
-            "Changes": [{
-            "Action": "UPSERT",
-            "ResourceRecordSet": {
-                "Name": "${RECORD_NAME}.vijayaws.fun",
-                "Type": "A",
-                "TTL": 1,
-                "ResourceRecords": [{"Value": "${IPP}"}]
+            \"Changes\": [{
+            \"Action\": "UPSERT",
+            \"ResourceRecordSet\": {
+                \"Name\": "${RECORD_NAME}.vijayaws.fun",
+                \"Type\": "A",
+                \"TTL\": 1,
+                \"ResourceRecords\": [{"Value": "${IPP}"}]
             }
             }]
         }")
