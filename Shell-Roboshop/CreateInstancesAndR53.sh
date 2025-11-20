@@ -6,10 +6,10 @@ SG_ID="sg-032ba9da30e4b33fa"
 Route(){
     RECORD_NAME=$1
     IPP=$2
-    if [ $RECORD_NAME -eq "frontend" ]; then
+    if [ $RECORD_NAME = "frontend" ]; then
         Routing=$(aws route53 change-resource-record-sets \
         --hosted-zone-id Z0971643FE7HKS61G2W9 \
-        --change-batch '{
+        --change-batch "{
             "Changes": [{
             "Action": "UPSERT",
             "ResourceRecordSet": {
@@ -19,11 +19,11 @@ Route(){
                 "ResourceRecords": [{"Value": "${IPP}"}]
             }
             }]
-        }')
+        }")
     else
         Routing=$(aws route53 change-resource-record-sets \
         --hosted-zone-id Z0971643FE7HKS61G2W9 \
-        --change-batch '{
+        --change-batch "{
             "Changes": [{
             "Action": "UPSERT",
             "ResourceRecordSet": {
@@ -33,7 +33,7 @@ Route(){
                 "ResourceRecords": [{"Value": "${IPP}"}]
             }
             }]
-        }')
+        }")
     fi
 }
 
@@ -43,7 +43,7 @@ do
   --image-id $AMI_ID \
   --instance-type t3.micro \
   --security-group-ids $SG_ID \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]"
   --query 'Instances[0].InstanceId'
   --output text)
 
