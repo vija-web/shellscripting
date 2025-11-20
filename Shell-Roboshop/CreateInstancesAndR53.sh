@@ -10,13 +10,13 @@ Route(){
         Routing=$(aws route53 change-resource-record-sets \
         --hosted-zone-id Z0971643FE7HKS61G2W9 \
         --change-batch "{
-            "Changes": [{
-            "Action": "UPSERT",
-            "ResourceRecordSet": {
-                "Name": "vijayaws.fun",
-                "Type": "A",
-                "TTL": 1,
-                "ResourceRecords": [{"Value": "${IPP}"}]
+            \"Changes\": [{
+            \"Action\": "UPSERT",
+            \"ResourceRecordSet\": {
+                \"Name\": "vijayaws.fun",
+                \"Type\": "A",
+                \"TTL\": 1,
+                \"ResourceRecords\": [{"Value": "${IPP}"}]
             }
             }]
         }")
@@ -43,11 +43,11 @@ do
   --image-id $AMI_ID \
   --instance-type t3.micro \
   --security-group-ids $SG_ID \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]"
-  --query 'Instances[0].InstanceId'
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]" \
+  --query 'Instances[0].InstanceId' \
   --output text)
 
-    if [ $Instance -ne "frontend" ]; then
+    if [ $Instance != "frontend" ]; then
         IP=$(aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID\
         --query "Reservations[0].Instances[0].PrivateIpAddress" \
