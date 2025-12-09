@@ -12,7 +12,8 @@ if [ "$UIDD" -ne 0 ]; then
 fi
 
 FOLDER="/var/log/shell-logs"
-mkdir -p $FOLDER
+mkdir -p "$FOLDER"
+chomod 777 /var/log/shell-logs
 
 SCRIPT_NAME=$0
 FILE_NAME=$(echo "$SCRIPT_NAME" | cut -d "." -f1)
@@ -33,7 +34,7 @@ cp ./mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE "Adding repo is" $?
 
 dnf install mongodb-org -y 
-VALIDATE "Installing Repo is" $?
+VALIDATE "Installing Mongodb is" $?
 
 systemctl enable mongod 
 VALIDATE "Enabling Mongodb is" $?
