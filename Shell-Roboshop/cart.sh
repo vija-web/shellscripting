@@ -31,54 +31,55 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Disabling nodejs is" $?
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling nodejs 20 is" $?
 
-dnf install nodejs -y
+dnf install nodejs -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing nodejs is" $?
 
 id roboshop
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> "$FOLDER/$FILE_NAME.log"
     VALIDATE "Adding roboshop user is" $?
 else
     echo "User already exits roboshop" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Creating /app directory is" $?
 
-chmod 777 /app
+chmod 777 /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changing permissions to /app is" $?
 
-curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Downloading the zip file is" $?
 
-cd /app
+cd /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changing the /app directory" $?
 
 if [ -z "$(ls -A /app)" ]; then
-    unzip /tmp/cart.zip -d /app
+    unzip /tmp/cart.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
     VALIDATE "Unziping in /app is" $?
 else
     echo "/app is not empty"
 fi
 
-
-npm install 
+npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./cart.service /etc/systemd/system/cart.service
+cp /home/ec2-user/shellscripting/Shell-Roboshop/cart.service /etc/systemd/system/cart.service &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Coping the cart.service file is" $?
 
-systemctl daemon-reload
+systemctl daemon-reload &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "daemon-reload is" $?
 
-systemctl enable cart 
+systemctl enable cart &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling cart is" $?
 
-systemctl start cart
+systemctl start cart &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting cart is" $?
+
+echo "=================================================================" | tee -a "$FOLDER/$FILE_NAME.log"

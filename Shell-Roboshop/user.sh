@@ -69,3 +69,5 @@ VALIDATE "Enabling the user is" $?
 
 systemctl start user &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting the user is" $?
+
+echo "=================================================================" | tee -a "$FOLDER/$FILE_NAME.log"
