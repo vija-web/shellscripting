@@ -41,6 +41,9 @@ VALIDATE "Enabling redis is" $?
 dnf install redis -y 
 VALIDATE "Installing redis is" $?
 
+chmod 777 /etc/redis/redis.conf
+VALIDATE "Chnaging permission to redis.conf is" $?
+
 sed -i -e 's/127.0.0.1/0.0.0.0' -e '/protected-mode yes/ c /protected-mode no/' /etc/redis/redis.conf
 VALIDATE "Modified redis.conf for 0.0.0.0" $?
 
