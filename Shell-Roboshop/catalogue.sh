@@ -54,7 +54,8 @@ VALIDATE "Changed to the /app directory" $?
 
 chmod 777 /app | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "permissions changed to the app directory" $?
-unzip /tmp/catalogue.zip | tee -a "$FOLDER/$FILE_NAME.log"
+
+unzip /tmp/catalogue.zip -d /app | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Unzip the file is" $?
 
 npm install | tee -a "$FOLDER/$FILE_NAME.log"
@@ -83,7 +84,7 @@ VALIDATE "Connecting the mogodb through mongosh client is" $?
 
 if [ $COUNT -eq 0 ]; then
     COUNT=1
-    mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
+    mongosh --host mongodb.vijayaws.sh </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
     VALIDATE "Connecting the mogodb through mongosh client is" $?
 else
     echo -e "$YELLOW Data to the database was loaded $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
