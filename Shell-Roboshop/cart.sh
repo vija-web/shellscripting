@@ -49,7 +49,7 @@ VALIDATE "Creating /app directory is" $?
 chmod 777 /app
 VALIDATE "Changing permissions to /app is" $?
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
 VALIDATE "Downloading the zip file is" $?
 
 cd /app
