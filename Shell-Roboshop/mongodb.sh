@@ -13,7 +13,7 @@ fi
 
 FOLDER="/var/log/shell-logs"
 mkdir -p "$FOLDER"
-chomod 777 /var/log/shell-logs
+chmod 777 /var/log/shell-logs
 
 SCRIPT_NAME=$0
 FILE_NAME=$(echo "$SCRIPT_NAME" | cut -d "." -f1)
