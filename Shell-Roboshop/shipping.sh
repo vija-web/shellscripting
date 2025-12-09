@@ -34,12 +34,12 @@ VALIDATE(){
 dnf install maven -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the maven is" $?
 
-id roboshop
+id roboshop &>> "$FOLDER/$FILE_NAME.log"
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> "$FOLDER/$FILE_NAME.log" &>> "$FOLDER/$FILE_NAME.log"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> "$FOLDER/$FILE_NAME.log"
     VALIDATE "Adding roboshop user is" $?
 else
-    echo "User already exits roboshop" | tee -a "$FOLDER/$FILE_NAME.log"
+    echo "User already exits roboshop ... $YELLOW SKIPPING $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
 
 mkdir -p /app &>> "$FOLDER/$FILE_NAME.log"
@@ -51,7 +51,7 @@ VALIDATE "Downloading the Zip is" $?
 chmod 777 /app
 VALIDATE "Changing the permissions for /app is" $?
 
-unzip /tmp/shipping.zip /app &>> "$FOLDER/$FILE_NAME.log"
+unzip /tmp/shipping.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "unzip the zip file in /app directory is" $?
 
 cd /app &>> "$FOLDER/$FILE_NAME.log"
