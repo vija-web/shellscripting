@@ -30,20 +30,20 @@ VALIDATE(){
     fi
 }
 
-cp ./mongo.repo /etc/yum.repos.d/mongo.repo
+cp ./mongo.repo /etc/yum.repos.d/mongo.repo | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding repo is" $?
 
-dnf install mongodb-org -y 
+dnf install mongodb-org -y | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing Mongodb is" $?
 
-systemctl enable mongod 
+systemctl enable mongod | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling Mongodb is" $?
 
-systemctl start mongod 
+systemctl start mongod | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting Mongodb is" $?
 
-sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Exposed to all IP is" $?
 
-systemctl restart mongod
+systemctl restart mongod | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Restarted Mongodb is" $?
