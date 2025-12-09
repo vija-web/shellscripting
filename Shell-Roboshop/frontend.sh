@@ -66,3 +66,5 @@ VALIDATE "coping the nginx.conf in /etc/nginx/nginx.conf is" $?
 
 systemctl restart nginx &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Restarting the nginx" $?
+
+echo "=================================================================" | tee -a "$FOLDER/$FILE_NAME.log"
