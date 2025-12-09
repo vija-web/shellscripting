@@ -31,59 +31,60 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Disabling nodejs is" $?
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling nodejs is" $?
 
-dnf install nodejs -y
+dnf install nodejs -y | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing nodejs is" $?
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding Roboshop user" $?
 
-mkdir -p /app 
-VALIDATE "Creating app directory" $?
+mkdir -p /app | tee -a "$FOLDER/$FILE_NAME.log"
+VALIDATE "Creating app directory" $? 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-VALIDATE "Downloading the zip" $?
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip | tee -a "$FOLDER/$FILE_NAME.log"
+VALIDATE "Downloading the zip" $? 
 
-cd /app 
+cd /app | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changed to the /app directory" $?
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Unzip the file is" $?
 
-npm install 
+npm install | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./catalogue.service /etc/systemd/system/catalogue.service
+cp ./catalogue.service /etc/systemd/system/catalogue.service | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "coping the service file is" $?
 
-systemctl daemon-reload
+systemctl daemon-reload | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "daemon-reload is" $?
 
-systemctl enable catalogue 
+systemctl enable catalogue | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling catalogue is" $?
 
-systemctl start catalogue
+systemctl start catalogue | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting catalogue is" $?
 
-cp ./mongo.repo /etc/yum.repos.d/mongo.repo
+cp ./mongo.repo /etc/yum.repos.d/mongo.repo | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding mongo.repo is" $?
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing mongodb client is" $?
 
-mongosh --host mongodb.vijayaws.fun </app/db/master-data.js
+mongosh --host mongodb.vijayaws.fun </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Connecting the mogodb through mongosh client is" $?
 
 if [ $COUNT -eq 0 ]; then
     COUNT=1
-    mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js
+    mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
     VALIDATE "Connecting the mogodb through mongosh client is" $?
 else
-    echo -e "$YELLOW Data to the database was loaded $NORMAL"
+    echo -e "$YELLOW Data to the database was loaded $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
 
+echo "=================================================================" | tee -a "$FOLDER/$FILE_NAME.log"
