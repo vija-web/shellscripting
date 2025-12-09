@@ -48,6 +48,9 @@ VALIDATE "Creating the /app directory is" $?
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Downloading the Zip is" $?
 
+chmod 777 /app
+VALIDATE "Changing the permissions for /app is" $?
+
 unzip /tmp/shipping.zip /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "unzip the zip file in /app directory is" $?
 
