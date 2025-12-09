@@ -15,7 +15,7 @@ FOLDER="/var/log/shell-logs"
 mkdir -p $FOLDER
 
 SCRIPT_NAME=$0
-FILE_NAME=$(cut -d "." -f1 ${SCRIPT_NAME})
+FILE_NAME=$(echo "$SCRIPT_NAME" | cut -d "." -f1)
 
 touch $FOLDER/$FILE_NAME.log
 
