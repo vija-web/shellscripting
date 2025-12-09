@@ -31,7 +31,7 @@ VALIDATE(){
     fi
 }
 
-dnf install python3 gcc python3-devel -y
+dnf install python3 gcc python3-devel -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the Python3 is" $?
 
 id roboshop &>> "$FOLDER/$FILE_NAME.log"
@@ -57,7 +57,7 @@ VALIDATE "Changing the directory to /app is" $?
 pip3 install -r requirements.txt &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./payment.service /etc/systemd/system/payment.service &>> "$FOLDER/$FILE_NAME.log"
+cp /home/ec2-user/shellscripting/Shell-Roboshop/payment.service /etc/systemd/system/payment.service &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding the payment.service is" $?
 
 systemctl daemon-reload &>> "$FOLDER/$FILE_NAME.log"
