@@ -31,61 +31,61 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nodejs -y | tee -a "$FOLDER/$FILE_NAME.log"
+dnf module disable nodejs -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Disabling nodejs is" $?
 
-dnf module enable nodejs:20 -y | tee -a "$FOLDER/$FILE_NAME.log"
+dnf module enable nodejs:20 -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling nodejs is" $?
 
-dnf install nodejs -y | tee -a "$FOLDER/$FILE_NAME.log"
+dnf install nodejs -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing nodejs is" $?
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop | tee -a "$FOLDER/$FILE_NAME.log"
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding Roboshop user" $?
 
-mkdir -p /app | tee -a "$FOLDER/$FILE_NAME.log"
+mkdir -p /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Creating app directory" $? 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip | tee -a "$FOLDER/$FILE_NAME.log"
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Downloading the zip" $? 
 
-cd /app | tee -a "$FOLDER/$FILE_NAME.log"
+cd /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changed to the /app directory" $?
 
-chmod 777 /app | tee -a "$FOLDER/$FILE_NAME.log"
+chmod 777 /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "permissions changed to the app directory" $?
 
-unzip /tmp/catalogue.zip -d /app | tee -a "$FOLDER/$FILE_NAME.log"
+unzip /tmp/catalogue.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Unzip the file is" $?
 
-npm install | tee -a "$FOLDER/$FILE_NAME.log"
+npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./catalogue.service /etc/systemd/system/catalogue.service | tee -a "$FOLDER/$FILE_NAME.log"
+cp ./catalogue.service /etc/systemd/system/catalogue.service &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "coping the service file is" $?
 
-systemctl daemon-reload | tee -a "$FOLDER/$FILE_NAME.log"
+systemctl daemon-reload &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "daemon-reload is" $?
 
-systemctl enable catalogue | tee -a "$FOLDER/$FILE_NAME.log"
+systemctl enable catalogue &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling catalogue is" $?
 
-systemctl start catalogue | tee -a "$FOLDER/$FILE_NAME.log"
+systemctl start catalogue &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting catalogue is" $?
 
-cp ./mongo.repo /etc/yum.repos.d/mongo.repo | tee -a "$FOLDER/$FILE_NAME.log"
+cp ./mongo.repo /etc/yum.repos.d/mongo.repo &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding mongo.repo is" $?
 
-dnf install mongodb-mongosh -y | tee -a "$FOLDER/$FILE_NAME.log"
+dnf install mongodb-mongosh -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing mongodb client is" $?
 
-mongosh --host mongodb.vijayaws.fun </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
+mongosh --host mongodb.vijayaws.fun </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Connecting the mogodb through mongosh client is" $?
 
 if [ $COUNT -eq 0 ]; then
     COUNT=1
-    mongosh --host mongodb.vijayaws.sh </app/db/master-data.js | tee -a "$FOLDER/$FILE_NAME.log"
-    VALIDATE "Connecting the mogodb through mongosh client is" $?
+    mongosh --host mongodb.vijayaws.sh </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
+    VALIDATE "Loaded the data in to the mongodb" $?
 else
     echo -e "$YELLOW Data to the database was loaded $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
