@@ -39,7 +39,7 @@ if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> "$FOLDER/$FILE_NAME.log"
     VALIDATE "Adding roboshop user is" $?
 else
-    echo "User already exits roboshop ... $YELLOW SKIPPING $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
+    echo -e "User already exits roboshop ... $YELLOW SKIPPING $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
 
 mkdir -p /app &>> "$FOLDER/$FILE_NAME.log"
