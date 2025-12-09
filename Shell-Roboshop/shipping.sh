@@ -51,8 +51,12 @@ VALIDATE "Downloading the Zip is" $?
 chmod 777 /app
 VALIDATE "Changing the permissions for /app is" $?
 
-unzip /tmp/shipping.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
-VALIDATE "unzip the zip file in /app directory is" $?
+if [ -z "$(ls -A /app)" ]; then
+    unzip /tmp/shipping.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
+    VALIDATE "Unziping in /app is" $?
+else
+    echo -e "/app is not empty $YELLOW skipping the unzip $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
+fi
 
 cd /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changing the /app directory is" $?

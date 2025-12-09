@@ -52,8 +52,12 @@ VALIDATE "Downloading zip file is" $?
 cd /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changing directory is" $?
 
-unzip /tmp/user.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
-VALIDATE "unziping the file is" $?
+if [ -z "$(ls -A /app)" ]; then
+    unzip /tmp/user.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
+    VALIDATE "Unziping in /app is" $?
+else
+    echo -e "/app is not empty $YELLOW skipping the unzip $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
+fi
 
 npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?

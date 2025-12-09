@@ -60,8 +60,12 @@ VALIDATE "Changed to the /app directory" $?
 chmod 777 /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "permissions changed to the app directory" $?
 
-unzip /tmp/catalogue.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
-VALIDATE "Unzip the file is" $?
+if [ -z "$(ls -A /app)" ]; then
+    unzip /tmp/catalogue.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
+    VALIDATE "Unziping in /app is" $?
+else
+    echo -e "/app is not empty $YELLOW skipping the unzip $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
+fi
 
 npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?

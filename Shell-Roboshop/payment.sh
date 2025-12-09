@@ -48,8 +48,12 @@ VALIDATE "Creating the /app directory is" $?
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Downloading the payment.zip file is" $?
 
-unzip /tmp/payment.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
-VALIDATE "unziping the file in /app directory is" $?
+if [ -z "$(ls -A /app)" ]; then
+    unzip /tmp/payment.zip -d /app &>> "$FOLDER/$FILE_NAME.log"
+    VALIDATE "Unziping in /app is" $?
+else
+    echo -e "/app is not empty $YELLOW skipping the unzip $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
+fi
 
 cd /app &>> "$FOLDER/$FILE_NAME.log" 
 VALIDATE "Changing the directory to /app is" $?
