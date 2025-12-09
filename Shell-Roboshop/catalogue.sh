@@ -52,6 +52,8 @@ VALIDATE "Downloading the zip" $?
 cd /app | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Changed to the /app directory" $?
 
+chmod 777 /app
+VALIDATE "permissions changed to the app directory" $?
 unzip /tmp/catalogue.zip | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Unzip the file is" $?
 
