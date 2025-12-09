@@ -60,8 +60,13 @@ VALIDATE "Downloading the zip file is" $?
 cd /app
 VALIDATE "Changing the /app directory" $?
 
-unzip /tmp/cart.zip -d /app
-VALIDATE "Unziping in /app is" $?
+if [ -z "$(ls -A /app)" ]; then
+    unzip /tmp/cart.zip -d /app
+    VALIDATE "Unziping in /app is" $?
+else
+    echo "/app is not empty"
+fi
+
 
 npm install 
 VALIDATE "Installing the dependencies is" $?
