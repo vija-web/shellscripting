@@ -32,23 +32,25 @@ VALIDATE(){
 }
 
 
-dnf module disable redis -y
+dnf module disable redis -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Disabling redis is" $?
 
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enabling redis is" $?
 
-dnf install redis -y 
+dnf install redis -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing redis is" $?
 
-chmod 777 /etc/redis/redis.conf
+chmod 777 /etc/redis/redis.conf &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Chnaging permission to redis.conf is" $?
 
-sed -i -e 's/127.0.0.1/0.0.0.0/' -e 's/protected-mode yes/protected-mode no/' /etc/redis/redis.conf
+sed -i -e 's/127.0.0.1/0.0.0.0/' -e 's/protected-mode yes/protected-mode no/' /etc/redis/redis.conf &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Modified redis.conf for 0.0.0.0" $?
 
-systemctl enable redis 
+systemctl enable redis &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Enablinging redis is" $?
 
-systemctl start redis
+systemctl start redis &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting redis is" $? 
+
+echo "=================================================" | tee -a "$FOLDER/$FILE_NAME.log"
