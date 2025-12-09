@@ -47,3 +47,5 @@ VALIDATE "Exposed to all IP is" $?
 
 systemctl restart mongod | tee -a "$FOLDER/$FILE_NAME.log"
 VALIDATE "Restarted Mongodb is" $?
+
+echo "=================================================" | tee -a "$FOLDER/$FILE_NAME.log"
