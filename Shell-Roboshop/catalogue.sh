@@ -93,7 +93,7 @@ VALIDATE "Installing mongodb client is" $?
 
 if [ $COUNT -eq 0 ]; then
     COUNT=1
-    mongosh --host mongodb.vijayaws.sh </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
+    mongosh --host mongodb.vijayaws.fun </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
     VALIDATE "Loaded the data in to the mongodb" $?
 else
     echo -e "$YELLOW Data to the database was loaded $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
