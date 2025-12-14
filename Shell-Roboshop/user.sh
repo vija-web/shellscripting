@@ -48,7 +48,7 @@ else
     echo -e "User already exits roboshop ... $YELLOW SKIPPING $NORMAL" | tee -a "$FOLDER/$FILE_NAME.log"
 fi
 
-mkdir /app &>> "$FOLDER/$FILE_NAME.log"
+mkdir -p /app &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Creating /app directory is" $?
 
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>> "$FOLDER/$FILE_NAME.log"
