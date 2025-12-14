@@ -88,8 +88,8 @@ VALIDATE "Adding mongo.repo is" $?
 dnf install mongodb-mongosh -y &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing mongodb client is" $?
 
-mongosh --host mongodb.vijayaws.fun </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
-VALIDATE "Connecting the mogodb through mongosh client is" $?
+# mongosh --host mongodb.vijayaws.fun </app/db/master-data.js &>> "$FOLDER/$FILE_NAME.log"
+# VALIDATE "Connecting the mogodb through mongosh client is" $?
 
 if [ $COUNT -eq 0 ]; then
     COUNT=1
