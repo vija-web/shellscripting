@@ -82,7 +82,7 @@ VALIDATE "Enabling catalogue is" $?
 systemctl start catalogue &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Starting catalogue is" $?
 
-cp ./mongo.repo /etc/yum.repos.d/mongo.repo &>> "$FOLDER/$FILE_NAME.log"
+cp /home/ec2-user/shellscripting/Shell-Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Adding mongo.repo is" $?
 
 dnf install mongodb-mongosh -y &>> "$FOLDER/$FILE_NAME.log"
