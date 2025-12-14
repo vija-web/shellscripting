@@ -70,7 +70,7 @@ fi
 npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./catalogue.service /etc/systemd/system/catalogue.service &>> "$FOLDER/$FILE_NAME.log"
+cp /home/ec2-user/shellscripting/Shell-Roboshop/catalogue.service /etc/systemd/system/catalogue.service &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "coping the service file is" $?
 
 systemctl daemon-reload &>> "$FOLDER/$FILE_NAME.log"

@@ -62,7 +62,7 @@ fi
 npm install &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "Installing the dependencies is" $?
 
-cp ./user.service /etc/systemd/system/user.service &>> "$FOLDER/$FILE_NAME.log"
+cp /home/ec2-user/shellscripting/Shell-Roboshop/user.service /etc/systemd/system/user.service &>> "$FOLDER/$FILE_NAME.log"
 VALIDATE "coping the user.service file is" $?
 
 systemctl daemon-reload &>> "$FOLDER/$FILE_NAME.log"
